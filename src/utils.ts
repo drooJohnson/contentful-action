@@ -76,7 +76,7 @@ export const branchNameToEnvironmentName = (branchName: string): string =>
  * @param branchName
  */
 export const branchTicketToEnvironmentName = (branchName: string): string => {
-  return branchName.match(new RegExp(TICKET_PREFIX+'-[0-9]*', 'i'))?.[0] ?? branchNameToEnvironmentName(branchName);
+  return branchName.match(new RegExp(`${TICKET_PREFIX}-\\d*`, 'i'))?.[0] ?? branchNameToEnvironmentName(branchName);
 }
 
 export enum Matcher {
