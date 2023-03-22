@@ -31,6 +31,11 @@ export declare const versionToFilename: (version: string) => string;
  * @param branchName
  */
 export declare const branchNameToEnvironmentName: (branchName: string) => string;
+/**
+ * Convert a branch's ticket number to a valid environmentName
+ * @param branchName
+ */
+export declare const branchTicketToEnvironmentName: (branchName: string) => string;
 export declare enum Matcher {
     YY = "YY",
     YYYY = "YYYY",
@@ -39,7 +44,8 @@ export declare enum Matcher {
     hh = "hh",
     mm = "mm",
     ss = "ss",
-    branch = "branch"
+    branch = "branch",
+    ticket = "ticket"
 }
 export declare const matchers: {
     ss: (date: Date) => string;
@@ -50,6 +56,7 @@ export declare const matchers: {
     MM: (date: Date) => string;
     DD: (date: Date) => string;
     branch: (branchName: string) => string;
+    ticket: (branchName: string) => string;
 };
 /**
  *

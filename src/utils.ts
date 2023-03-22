@@ -7,6 +7,7 @@ import {
   FEATURE_PATTERN,
   LOG_LEVEL,
   MASTER_PATTERN,
+  TICKET_PREFIX
 } from "./constants";
 import {
   BranchNames,
@@ -70,6 +71,13 @@ export const versionToFilename = (version: string): string =>
 export const branchNameToEnvironmentName = (branchName: string): string =>
   branchName.replace(/[\/_.]/g, "-");
 
+/**
+ * Convert a branch's ticket number to a valid environmentName
+ * @param branchName
+ */
+export const branchTicketToEnvironmentName = (branchName: string): string => 
+  branchName.match(new RegExp(TICKET_PREFIX+'\d*', 'i'))[0];
+
 export enum Matcher {
   YY = "YY",
   YYYY = "YYYY",
@@ -79,6 +87,7 @@ export enum Matcher {
   mm = "mm",
   ss = "ss",
   branch = "branch",
+  ticket = "ticket",
 }
 
 export const matchers = {
@@ -95,6 +104,8 @@ export const matchers = {
   [Matcher.DD]: (date: Date): string => `${date.getDate()}`.padStart(2, "0"),
   [Matcher.branch]: (branchName: string): string =>
     branchNameToEnvironmentName(branchName),
+  [Matcher.ticket]: (branchName: string): string =>
+    branchTicketToEnvironmentName(branchName),
 };
 
 /**
@@ -108,9 +119,11 @@ export const getNameFromPattern = (
 ): string => {
   const date = new Date();
   return pattern.replace(
-    /\[(YYYY|YY|MM|DD|hh|mm|ss|branch)]/g,
+    /\[(YYYY|YY|MM|DD|hh|mm|ss|branch|ticket)]/g,
     (substring, match: Matcher) => {
       switch (match) {
+        case Matcher.ticket:
+          return matchers[Matcher.ticket](branchName);
         case Matcher.branch:
           return matchers[Matcher.branch](branchName);
         case Matcher.YYYY:

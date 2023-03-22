@@ -61,6 +61,7 @@ These helpers are available:
 - `[mm]` - Minutes (i.e. 00)
 - `[ss]` - Seconds (i.e. 50)
 - `[branch]` - BranchName (`/`, `.`, `_` are replaced to `-`)
+- `[ticket]` - Ticket Number, to use this helper you must supply a ticket_prefix to the workflow. Typically this is a few characters followed by a hyphen and some numerals.
 
 ### Examples
 
@@ -68,6 +69,7 @@ These helpers are available:
 - `production-[YYYY][MM][DD][hh][mm]`: `production-20210211212032`
 - `sandbox-[branch]` (`feat/my-feature`): `sandbox-feat-my-feature`
 - `pr-[branch]` (`feat/add-something-1.2.3_2`): `pr-feat-add-something-1-2-3-2`
+- `sandbox-[ticket]` (`feat/TICKET-000-feature-name`): `sandbox-TICKET-000`
 
 ## Automations
 
@@ -97,6 +99,7 @@ delete_feature           | `boolean` | No  | `false` | Deletes sandbox environme
 set_alias                | `boolean` | No  | `false` | Aliases master the new master environment
 master_pattern           | `string`  | No  | `master-[YYYY]-[MM]-[DD]-[hh][mm]` | The pattern that should be used for the new master environment on contentful
 feature_pattern          | `string`  | No  | `GH-[branch]` | The pattern that should be used for the new feature environments on contentful
+ticket_prefix            | `string`  | No  | `undefined` | The pattern used to isolate the ticket number from a branch name, followed by a hyphen and any number of numerals. This prefix is NOT case sensitive.
 version_content_type     | `string`  | No  | `versionTracking` | The content-type that tracks the version
 version_field            | `string`  | No  | `version` | The field-id that carries the version number
 migrations_dir           | `string`  | No  | `migrations` | The directory to look for migrations

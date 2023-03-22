@@ -1,4 +1,4 @@
-export declare const GITHUB_WORKSPACE: string, LOG_LEVEL: string, SPACE_ID: string, MANAGEMENT_API_KEY: string, INPUT_MIGRATIONS_DIR: string, INPUT_DELETE_FEATURE: string, INPUT_SET_ALIAS: string, INPUT_FEATURE_PATTERN: string, INPUT_MASTER_PATTERN: string, INPUT_VERSION_CONTENT_TYPE: string, INPUT_VERSION_FIELD: string;
+export declare const GITHUB_WORKSPACE: string, LOG_LEVEL: string, SPACE_ID: string, MANAGEMENT_API_KEY: string, INPUT_MIGRATIONS_DIR: string, INPUT_DELETE_FEATURE: string, INPUT_SET_ALIAS: string, INPUT_FEATURE_PATTERN: string, INPUT_MASTER_PATTERN: string, INPUT_TICKET_PREFIX: string, INPUT_VERSION_CONTENT_TYPE: string, INPUT_VERSION_FIELD: string;
 export declare const DEFAULT_MIGRATIONS_DIR = "migrations";
 export declare const DEFAULT_MASTER_PATTERN = "master-[YYYY]-[MM]-[DD]-[mm][ss]";
 export declare const DEFAULT_FEATURE_PATTERN = "GH-[branch]";
@@ -10,6 +10,7 @@ export declare const VERSION_CONTENT_TYPE: string;
 export declare const FEATURE_PATTERN: string;
 export declare const MASTER_PATTERN: string;
 export declare const VERSION_FIELD: string;
+export declare const TICKET_PREFIX: string;
 export declare const DELETE_FEATURE: boolean;
 export declare const SET_ALIAS: boolean;
 export declare const MIGRATIONS_DIR: string;

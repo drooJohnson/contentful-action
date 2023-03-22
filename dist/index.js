@@ -98659,7 +98659,7 @@ var to_semver_default = /*#__PURE__*/__webpack_require__.n(to_semver);
 // CONCATENATED MODULE: ./src/constants.ts
 var constants_a;
 
-var GITHUB_WORKSPACE = (constants_a = process.env, constants_a.GITHUB_WORKSPACE), LOG_LEVEL = constants_a.LOG_LEVEL, SPACE_ID = constants_a.INPUT_SPACE_ID, MANAGEMENT_API_KEY = constants_a.INPUT_MANAGEMENT_API_KEY, INPUT_MIGRATIONS_DIR = constants_a.INPUT_MIGRATIONS_DIR, INPUT_DELETE_FEATURE = constants_a.INPUT_DELETE_FEATURE, INPUT_SET_ALIAS = constants_a.INPUT_SET_ALIAS, INPUT_FEATURE_PATTERN = constants_a.INPUT_FEATURE_PATTERN, INPUT_MASTER_PATTERN = constants_a.INPUT_MASTER_PATTERN, INPUT_VERSION_CONTENT_TYPE = constants_a.INPUT_VERSION_CONTENT_TYPE, INPUT_VERSION_FIELD = constants_a.INPUT_VERSION_FIELD;
+var GITHUB_WORKSPACE = (constants_a = process.env, constants_a.GITHUB_WORKSPACE), LOG_LEVEL = constants_a.LOG_LEVEL, SPACE_ID = constants_a.INPUT_SPACE_ID, MANAGEMENT_API_KEY = constants_a.INPUT_MANAGEMENT_API_KEY, INPUT_MIGRATIONS_DIR = constants_a.INPUT_MIGRATIONS_DIR, INPUT_DELETE_FEATURE = constants_a.INPUT_DELETE_FEATURE, INPUT_SET_ALIAS = constants_a.INPUT_SET_ALIAS, INPUT_FEATURE_PATTERN = constants_a.INPUT_FEATURE_PATTERN, INPUT_MASTER_PATTERN = constants_a.INPUT_MASTER_PATTERN, INPUT_TICKET_PREFIX = constants_a.INPUT_TICKET_PREFIX, INPUT_VERSION_CONTENT_TYPE = constants_a.INPUT_VERSION_CONTENT_TYPE, INPUT_VERSION_FIELD = constants_a.INPUT_VERSION_FIELD;
 var booleanOr = function (str, fallback) {
     switch (str) {
         case "true":
@@ -98681,6 +98681,7 @@ var VERSION_CONTENT_TYPE = INPUT_VERSION_CONTENT_TYPE || DEFAULT_VERSION_CONTENT
 var FEATURE_PATTERN = INPUT_FEATURE_PATTERN || DEFAULT_FEATURE_PATTERN;
 var MASTER_PATTERN = INPUT_MASTER_PATTERN || DEFAULT_MASTER_PATTERN;
 var VERSION_FIELD = INPUT_VERSION_FIELD || DEFAULT_VERSION_FIELD;
+var TICKET_PREFIX = INPUT_TICKET_PREFIX || "";
 var DELETE_FEATURE = booleanOr(INPUT_DELETE_FEATURE, DEFAULT_DELETE_FEATURE);
 var SET_ALIAS = booleanOr(INPUT_SET_ALIAS, DEFAULT_SET_ALIAS);
 var MIGRATIONS_DIR = external_path_default().join(GITHUB_WORKSPACE, INPUT_MIGRATIONS_DIR || DEFAULT_MIGRATIONS_DIR);
@@ -98759,6 +98760,13 @@ var versionToFilename = function (version) {
 var branchNameToEnvironmentName = function (branchName) {
     return branchName.replace(/[\/_.]/g, "-");
 };
+/**
+ * Convert a branch's ticket number to a valid environmentName
+ * @param branchName
+ */
+var branchTicketToEnvironmentName = function (branchName) {
+    return branchName.match(new RegExp(TICKET_PREFIX + '\d*', 'i'))[0];
+};
 var Matcher;
 (function (Matcher) {
     Matcher["YY"] = "YY";
@@ -98769,6 +98777,7 @@ var Matcher;
     Matcher["mm"] = "mm";
     Matcher["ss"] = "ss";
     Matcher["branch"] = "branch";
+    Matcher["ticket"] = "ticket";
 })(Matcher || (Matcher = {}));
 var matchers = (utils_a = {},
     utils_a[Matcher.ss] = function (date) {
@@ -98789,6 +98798,9 @@ var matchers = (utils_a = {},
     utils_a[Matcher.branch] = function (branchName) {
         return branchNameToEnvironmentName(branchName);
     },
+    utils_a[Matcher.ticket] = function (branchName) {
+        return branchTicketToEnvironmentName(branchName);
+    },
     utils_a);
 /**
  *
@@ -98798,8 +98810,10 @@ var matchers = (utils_a = {},
 var getNameFromPattern = function (pattern, _a) {
     var _b = _a === void 0 ? {} : _a, branchName = _b.branchName;
     var date = new Date();
-    return pattern.replace(/\[(YYYY|YY|MM|DD|hh|mm|ss|branch)]/g, function (substring, match) {
+    return pattern.replace(/\[(YYYY|YY|MM|DD|hh|mm|ss|branch|ticket)]/g, function (substring, match) {
         switch (match) {
+            case Matcher.ticket:
+                return matchers[Matcher.ticket](branchName);
             case Matcher.branch:
                 return matchers[Matcher.branch](branchName);
             case Matcher.YYYY:
