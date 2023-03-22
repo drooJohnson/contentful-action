@@ -9,6 +9,8 @@ inputs:
     description: "The pattern that should be used for the new master"
   feature_pattern:
     description: "The pattern that should be used for the new feature"
+  ticket_prefix:
+    description: "The prefix for ticket numbers from the branch name"
   version_content_type:
     description: "The content-type that tracks the version"
   version_field:
