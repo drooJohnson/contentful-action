@@ -75,8 +75,9 @@ export const branchNameToEnvironmentName = (branchName: string): string =>
  * Convert a branch's ticket number to a valid environmentName
  * @param branchName
  */
-export const branchTicketToEnvironmentName = (branchName: string): string => 
-  branchName.match(new RegExp(TICKET_PREFIX+'\d*', 'i'))[0];
+export const branchTicketToEnvironmentName = (branchName: string): string => {
+  return branchName.match(new RegExp(TICKET_PREFIX+'-\d*', 'i'))?.[0] ?? branchNameToEnvironmentName(branchName);
+}
 
 export enum Matcher {
   YY = "YY",

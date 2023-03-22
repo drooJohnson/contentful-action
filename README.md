@@ -61,7 +61,7 @@ These helpers are available:
 - `[mm]` - Minutes (i.e. 00)
 - `[ss]` - Seconds (i.e. 50)
 - `[branch]` - BranchName (`/`, `.`, `_` are replaced to `-`)
-- `[ticket]` - Ticket Number, to use this helper you must supply a ticket_prefix to the workflow. Typically this is a few characters followed by a hyphen and some numerals.
+- `[ticket]` - Ticket Number, to use this helper you must supply a ticket_prefix to the workflow. Typically this is a few characters followed by a hyphen and some numerals. If no ticket number is found, this will fall back to the value from `[branch]`.
 
 ### Examples
 
