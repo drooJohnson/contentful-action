@@ -11,7 +11,7 @@ export interface EnvironmentNames {
     base: string;
     head: string | null;
 }
-type EnvironmentType = "master" | "feature";
+declare type EnvironmentType = "master" | "feature";
 export interface EnvironmentProps {
     environmentType: EnvironmentType;
     environmentNames: EnvironmentNames;
